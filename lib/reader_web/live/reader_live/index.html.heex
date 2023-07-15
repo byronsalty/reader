@@ -1,0 +1,25 @@
+<div class="m-10" phx-window-keydown="press">
+  <h1>Reader</h1>
+
+  <!-- Words pane -->
+  <div class="h-40 m-10 justify-center">
+    <div class="text-gray-300 text-sm"><%= @last %></div>
+    <div class="text-black text-xl"><%= @current %></div>
+    <div class="text-gray-300 text-sm"><%= @next %></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="h-10 m-10">
+    <div>
+      <button phx-click="next" class="btn btn-blue">Next</button>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="h-10 m-10">
+    <div>
+      <p><b>Paused</b>: <%= not @auto %></p>
+      <p><b>WPM</b>: <%= @wpm %></p>
+    </div>
+  </div>
+</div>
