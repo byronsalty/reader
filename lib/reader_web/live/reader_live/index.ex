@@ -64,12 +64,23 @@ defmodule ReaderWeb.ReaderLive.Index do
 
       {:noreply, next(socket)}
     else
+      IO.inspect("no auto", label: "no auto")
       {:noreply, socket}
     end
 
 
   end
 
+  def handle_event("press", %{"key" => "ArrowUp"}, socket) do
+    word_delay_ms = trunc(socket.assigns.word_delay_ms * 0.98)
+
+    {:noreply, assign(socket, word_delay_ms: word_delay_ms, wpm: calc_wpm(word_delay_ms))}
+  end
+  def handle_event("press", %{"key" => "ArrowDown"}, socket) do
+    word_delay_ms = trunc(socket.assigns.word_delay_ms * 1.02)
+
+    {:noreply, assign(socket, word_delay_ms: word_delay_ms, wpm: calc_wpm(word_delay_ms))}
+  end
   def handle_event("press", %{"key" => "ArrowRight"}, socket) do
     {:noreply, next(socket)}
   end
@@ -101,7 +112,7 @@ defmodule ReaderWeb.ReaderLive.Index do
 
       assign(socket, last: last, current: current, next: next, forward: forward, backward: backward)
     else
-      socket
+      assign(socket, auto: false)
     end
   end
   defp previous(socket) do
@@ -117,11 +128,11 @@ defmodule ReaderWeb.ReaderLive.Index do
         end
       assign(socket, last: last, current: current, next: next, forward: forward, backward: backward)
     else
-      socket
+      assign(socket, auto: false)
     end
   end
 
   defp calc_wpm(delay_ms) do
-    60_000 / delay_ms
+    trunc(60_000 / delay_ms)
   end
 end
