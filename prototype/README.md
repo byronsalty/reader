@@ -1,14 +1,13 @@
 # Setup
 
-```
-mix deps.get
-mix phx.server
-```
+I think `python3` and `tk` should be readily available, if not let me know.
 
+# Run it
+
+```
+python3 app.py
+```
 # Usage
-
-Go to: (http://localhost:4000/reader)
-
 Space Bar to Begin (auto scroll)
 Up arrow to speed up
 Down arrow to slow down
