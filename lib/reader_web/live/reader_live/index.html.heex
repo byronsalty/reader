@@ -1,3 +1,33 @@
+<%!-- Header --%>
+<header class="header">
+  <section class="logo">
+    Reader
+  </section>
+  
+  <section class="main-menu">
+    <div>How it works</div>
+    <div>Login</div>
+  </section>
+</header>
+
+<%!-- Side Nav --%>
+<section>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <span class="material-symbols-rounded">space_bar</span>Start/Stop
+            <span class="material-symbols-rounded">arrow_upward_alt</span>Speed Up
+            <span class="material-symbols-rounded">arrow_downward_alt</span>Slow Down
+            <span class="material-symbols-rounded">arrow_left_alt</span>Rewind
+            <span class="material-symbols-rounded">arrow_right_alt</span>Forward
+            <span></span>ESC Exit
+        </div>
+        <section class="reader-menu my-[10px] ml-[2.5rem]">
+            <h1><span onclick="openNav()">Instructions |</span>
+            <span>Upload |</span>
+            <span>Another Menu Item |</span></h1>
+        </section>
+    </section>
+
 <div class="m-10" phx-window-keydown="press">
   <h1>Reader!</h1>
 
@@ -23,3 +53,14 @@
     </div>
   </div>
 </div>
+
+<%!-- Side NAV script --%>
+<script>/* Set the width of the side navigation to max avilable */
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "100%";
+    }
+    
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }</script>
