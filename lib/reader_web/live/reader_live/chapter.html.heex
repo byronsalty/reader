@@ -1,0 +1,50 @@
+<%!-- Header --%>
+<header class="header">
+  <section class="logo">
+    Reader
+  </section>
+  
+  <section class="main-menu">
+    <div>How it works</div>
+    <div>Login</div>
+  </section>
+</header>
+
+<%!-- Sub Menu --%>
+<section class="reader-menu my-[10px] ml-[2.5rem]">
+  <h1><span onclick="openNav()">Instructions |</span>
+  <span>Upload |</span>
+  <span>Another Menu Item |</span></h1>
+</section>
+
+<%!-- Reader Area --%>
+<section class="mx-80">
+<!-- Reader Pane -->
+  <section class="flex flex-row justify-center h-64 mt-12 mb-4 border-8 border-[#1d1832] rounded-[2.5rem] bg-[steelblue]">
+    <div class="flex flex-col justify-center mx-80">
+      <div class="text-gray-300 text-4sm"><%= @last %></div>
+      <div class="text-black text-5xl"><%= @current %></div>
+      <div class="text-gray-300 text-4sm"><%= @next %></div>
+    </div>
+  </section>
+
+<!-- Info Area -->
+  <section class="flex flex-row justify-center mb-4">
+    <div>
+      <b>Paused</b>: <%= not @auto %>
+      <b>WPM</b>: <%= @wpm %>
+    </div>
+  </section>
+
+<!-- Controls -->
+  <section class="flex flex-row justify-evenly">
+    <button class="controls-button" phx-click="space"><i class="material-symbols-rounded">space_bar</i>Start/Stop</button>
+    <button class="controls-button" phx-click="up"><i class="material-symbols-rounded">arrow_upward_alt</i>Speed Up</button>
+    <button class="controls-button" phx-click="down"><i class="material-symbols-rounded">arrow_downward_alt</i>Slow Down</button>
+    <button class="controls-button" phx-click="previous"><i class="material-symbols-rounded">arrow_left_alt</i>Rewind</button>
+    <button class="controls-button" phx-click="next"><i class="material-symbols-rounded">arrow_right_alt</i>Forward</button>
+  </section>
+</section>
+
+<%!-- Bindings --%>
+<div class="m-10" phx-window-keydown="press"></div>

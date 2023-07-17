@@ -20,6 +20,7 @@ defmodule ReaderWeb.Router do
     get "/", PageController, :home
 
     live "/reader", ReaderLive.Index, :index
+    live "/reader/:book/:chapter", ReaderLive.Chapter, :chapter
   end
 
   # Other scopes may use custom stacks.
