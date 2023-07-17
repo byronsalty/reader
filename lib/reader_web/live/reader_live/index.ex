@@ -48,9 +48,41 @@ defmodule ReaderWeb.ReaderLive.Index do
   end
 
   def handle_event("next", _, socket) do
-
     {:noreply, next(socket)}
   end
+  def handle_event("previous", _, socket) do
+    {:noreply, previous(socket)}
+  end
+  def handle_event("up", _, socket) do
+    {:noreply, faster(socket)}
+  end
+  def handle_event("down", _, socket) do
+    {:noreply, slower(socket)}
+  end
+  def handle_event("space", _, socket) do
+    {:noreply, start_stop(socket)}
+  end
+
+  def handle_event("press", %{"key" => "ArrowUp"}, socket) do
+    {:noreply, faster(socket)}
+  end
+  def handle_event("press", %{"key" => "ArrowDown"}, socket) do
+    {:noreply, slower(socket)}
+  end
+  def handle_event("press", %{"key" => "ArrowRight"}, socket) do
+    {:noreply, next(socket)}
+  end
+  def handle_event("press", %{"key" => "ArrowLeft"}, socket) do
+    {:noreply, previous(socket)}
+  end
+  def handle_event("press", %{"key" => " "}, socket) do
+    {:noreply, start_stop(socket)}
+  end
+
+  def handle_event("press", _, socket) do
+    {:noreply, socket}
+  end
+
   def handle_info(:loop, socket) do
     if socket.assigns.auto do
 
@@ -71,31 +103,22 @@ defmodule ReaderWeb.ReaderLive.Index do
 
   end
 
-  def handle_event("press", %{"key" => "ArrowUp"}, socket) do
-    word_delay_ms = trunc(socket.assigns.word_delay_ms * 0.98)
-
-    {:noreply, assign(socket, word_delay_ms: word_delay_ms, wpm: calc_wpm(word_delay_ms))}
-  end
-  def handle_event("press", %{"key" => "ArrowDown"}, socket) do
-    word_delay_ms = trunc(socket.assigns.word_delay_ms * 1.02)
-
-    {:noreply, assign(socket, word_delay_ms: word_delay_ms, wpm: calc_wpm(word_delay_ms))}
-  end
-  def handle_event("press", %{"key" => "ArrowRight"}, socket) do
-    {:noreply, next(socket)}
-  end
-  def handle_event("press", %{"key" => "ArrowLeft"}, socket) do
-    {:noreply, previous(socket)}
-  end
-  def handle_event("press", %{"key" => " "}, socket) do
+  defp start_stop(socket) do
     auto = not socket.assigns.auto
     IO.inspect(auto, label: "space")
     send(self(), :loop)
-    {:noreply, assign(socket, auto: auto)}
+
+    assign(socket, auto: auto)
   end
 
-  def handle_event("press", _, socket) do
-    {:noreply, socket}
+  defp faster(socket) do
+    word_delay_ms = trunc(socket.assigns.word_delay_ms * 0.98)
+    assign(socket, word_delay_ms: word_delay_ms, wpm: calc_wpm(word_delay_ms))
+  end
+
+  defp slower(socket) do
+    word_delay_ms = trunc(socket.assigns.word_delay_ms * 1.02)
+    assign(socket, word_delay_ms: word_delay_ms, wpm: calc_wpm(word_delay_ms))
   end
 
   defp next(socket) do
